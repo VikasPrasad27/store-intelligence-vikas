@@ -62,19 +62,25 @@ function requestLogger(req, res, next) {
   const startTime = Date.now();
 
 res.on('finish', () => {
-  const latencyMs = Date.now() - startTime;
+  try {
+    const latencyMs = Date.now() - startTime;
 
-  logger.info('HTTP request', {
-    trace_id: traceId,
-    method: req.method,
-    path: req.path,
-    store_id: req.params.id ?? req.body?.store_id ?? null,
-    endpoint: `${req.method} ${req.route?.path || req.path}`,
-    latency_ms: latencyMs,
-    event_count: req.validatedBody?.events?.length ?? null,
-    status_code: res.statusCode,
-    ip: req.ip,
-  });
+    logger.info('HTTP request', {
+      trace_id: traceId,
+      method: req.method,
+      path: req.path,
+      store_id: req.params?.id ?? req.body?.store_id ?? null,
+      endpoint: `${req.method} ${req.route?.path ?? req.path}`,
+      latency_ms: latencyMs,
+      event_count: req.validatedBody?.events?.length ?? null,
+      status_code: res.statusCode,
+      ip: req.ip,
+    });
+  } catch (err) {
+    logger.error('Request logging failed', {
+      error: err.message,
+    });
+  }
 });
 
   next();
