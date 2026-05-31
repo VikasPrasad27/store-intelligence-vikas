@@ -10,6 +10,11 @@ const eventSchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
+    // Legacy compatibility for older Atlas indexes/deploys that used eventId.
+    eventId: {
+      type: String,
+      index: true,
+    },
     store_id: {
       type: String,
       required: true,

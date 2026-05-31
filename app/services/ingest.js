@@ -19,6 +19,7 @@ async function ingestEvents(events) {
       update: {
         $setOnInsert: {
           event_id: evt.event_id,
+          eventId: evt.event_id,
           store_id: evt.store_id,
           camera_id: evt.camera_id,
           visitor_id: evt.visitor_id,
