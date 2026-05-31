@@ -10,7 +10,7 @@ import Header from './components/Header'
 import StorePicker from './components/StorePicker'
 import { formatDistanceToNow } from 'date-fns'
 
-const DEFAULT_STORE = 'STORE_BLR_002'
+const DEFAULT_STORE = 'STORE_BLR_BRIGADE'
 
 export default function App() {
   const [storeId, setStoreId] = useState(DEFAULT_STORE)
