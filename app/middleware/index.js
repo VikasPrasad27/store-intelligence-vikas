@@ -61,20 +61,21 @@ function requestLogger(req, res, next) {
   req.traceId = traceId;
   const startTime = Date.now();
 
-  res.on('finish', () => {
-    const latencyMs = Date.now() - startTime;
-    logger.info('HTTP request', {
-      trace_id: traceId,
-      method: req.method,
-      path: req.path,
-      store_id: req.params.id || req.body?.store_id || null,
-      endpoint: `${req.method} ${req.route?.path || req.path}`,
-      latency_ms: latencyMs,
-      event_count: req.validatedBody?.events?.length || null,
-      status_code: res.statusCode,
-      ip: req.ip,
-    });
+res.on('finish', () => {
+  const latencyMs = Date.now() - startTime;
+
+  logger.info('HTTP request', {
+    trace_id: traceId,
+    method: req.method,
+    path: req.path,
+    store_id: req.params.id ?? req.body?.store_id ?? null,
+    endpoint: `${req.method} ${req.route?.path || req.path}`,
+    latency_ms: latencyMs,
+    event_count: req.validatedBody?.events?.length ?? null,
+    status_code: res.statusCode,
+    ip: req.ip,
   });
+});
 
   next();
 }
