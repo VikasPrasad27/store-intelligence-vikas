@@ -1,0 +1,102 @@
+[
+  {
+    "store_id": "STORE_BLR_BRIGADE",
+    "name": "Purplle Brigade Road Bangalore",
+    "original_store_id": "ST1008",
+    "city": "Bangalore",
+    "address": "Brigade Road, Bangalore",
+    "open_hours": { "open": "11:00", "close": "22:00" },
+    "cameras": [
+      { "camera_id": "CAM_1", "type": "entry",   "zone_coverage": ["ENTRY_ZONE"] },
+      { "camera_id": "CAM_2", "type": "floor",   "zone_coverage": ["FOH_CENTER","FRAGRANCE","NAIL_UNIT"] },
+      { "camera_id": "CAM_3", "type": "floor",   "zone_coverage": ["SKIN","MAKEUP_UNIT"] },
+      { "camera_id": "CAM_4", "type": "billing", "zone_coverage": ["CASH_COUNTER"] },
+      { "camera_id": "CAM_5", "type": "floor",   "zone_coverage": ["WALL_BRANDS"] }
+    ],
+    "zones": [
+      {
+        "zone_id": "ENTRY_ZONE",
+        "zone_name": "Store Entry / Exit",
+        "zone_type": "entry_exit",
+        "camera_ids": ["CAM_1"],
+        "polygon": [[0,0],[1920,0],[1920,300],[0,300]]
+      },
+      {
+        "zone_id": "FOH_CENTER",
+        "zone_name": "Floor of House - Center",
+        "zone_type": "floor",
+        "sku_zone": "FOH",
+        "camera_ids": ["CAM_2"],
+        "polygon": [[400,200],[1400,200],[1400,700],[400,700]]
+      },
+      {
+        "zone_id": "FRAGRANCE",
+        "zone_name": "Fragrance & Nail Unit",
+        "zone_type": "floor",
+        "sku_zone": "FRAGRANCE",
+        "camera_ids": ["CAM_2"],
+        "polygon": [[200,200],[500,200],[500,700],[200,700]]
+      },
+      {
+        "zone_id": "NAIL_UNIT",
+        "zone_name": "Nail Unit",
+        "zone_type": "floor",
+        "sku_zone": "NAIL",
+        "camera_ids": ["CAM_2"],
+        "polygon": [[300,300],[600,300],[600,650],[300,650]]
+      },
+      {
+        "zone_id": "SKIN",
+        "zone_name": "Skincare - Wall Brands (EB Korean, The Face Shop, Good Vibes, DermDoc, Minimalist, Aqualogica, Lakme Skin)",
+        "zone_type": "floor",
+        "sku_zone": "SKINCARE",
+        "camera_ids": ["CAM_3"],
+        "polygon": [[0,0],[1920,0],[1920,350],[0,350]]
+      },
+      {
+        "zone_id": "MAKEUP_UNIT",
+        "zone_name": "Makeup Unit (Center)",
+        "zone_type": "floor",
+        "sku_zone": "MAKEUP",
+        "camera_ids": ["CAM_3"],
+        "polygon": [[600,300],[1300,300],[1300,700],[600,700]]
+      },
+      {
+        "zone_id": "WALL_BRANDS",
+        "zone_name": "Wall Brands - Maybelline, Faces Canada, Lakme, Colorbar, Swiss Beauty, Renee, Alps Goodness, Streax",
+        "zone_type": "floor",
+        "sku_zone": "MAKEUP",
+        "camera_ids": ["CAM_5"],
+        "polygon": [[0,500],[1920,500],[1920,800],[0,800]]
+      },
+      {
+        "zone_id": "CASH_COUNTER",
+        "zone_name": "Cash Counter / Billing",
+        "zone_type": "billing",
+        "camera_ids": ["CAM_4"],
+        "polygon": [[1300,200],[1920,200],[1920,700],[1300,700]]
+      }
+    ],
+    "brands": [
+      {"brand": "EB Korean", "zone": "SKIN", "type": "Exclusive"},
+      {"brand": "The Face Shop", "zone": "SKIN", "type": "Exclusive"},
+      {"brand": "Good Vibes", "zone": "SKIN", "type": "PB"},
+      {"brand": "DermDoc", "zone": "SKIN", "type": "PB"},
+      {"brand": "Minimalist", "zone": "SKIN", "type": "Exclusive"},
+      {"brand": "Aqualogica", "zone": "SKIN", "type": "Exclusive"},
+      {"brand": "Lakme Skin", "zone": "SKIN", "type": "PB"},
+      {"brand": "Accessories", "zone": "SKIN", "type": "PB"},
+      {"brand": "Fragrance", "zone": "FRAGRANCE", "type": "floor"},
+      {"brand": "Nail Unit", "zone": "NAIL_UNIT", "type": "floor"},
+      {"brand": "Maybelline", "zone": "WALL_BRANDS", "type": "Exclusive"},
+      {"brand": "Faces Canada", "zone": "WALL_BRANDS", "type": "PB"},
+      {"brand": "Lakme Makeup", "zone": "WALL_BRANDS", "type": "PB"},
+      {"brand": "Colorbar + Sugar", "zone": "WALL_BRANDS", "type": "Exclusive"},
+      {"brand": "Swiss Beauty", "zone": "WALL_BRANDS", "type": "PB"},
+      {"brand": "Renee NY Bae", "zone": "WALL_BRANDS", "type": "PB"},
+      {"brand": "Alps Goodness", "zone": "WALL_BRANDS", "type": "PB"},
+      {"brand": "Streax", "zone": "WALL_BRANDS", "type": "PB"},
+      {"brand": "PMU", "zone": "CASH_COUNTER", "type": "service"}
+    ]
+  }
+]

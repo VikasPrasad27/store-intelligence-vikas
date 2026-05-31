@@ -1,0 +1,71 @@
+services:
+
+  # ── MongoDB ──────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7.0
+    container_name: store_intel_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-changeme}
+      MONGO_INITDB_DATABASE: store_intelligence
+    volumes:
+      - mongo_data:/data/db
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ── API ───────────────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: store_intel_api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      MONGODB_URI: mongodb://${MONGO_USER:-admin}:${MONGO_PASSWORD_URI:-changeme}@mongo:27017/store_intelligence?authSource=admin
+      CORS_ORIGIN: http://localhost:5173,http://localhost:3000,http://dashboard:80
+      API_KEY: ${API_KEY:-}
+      LOG_LEVEL: info
+      STORE_OPEN_HOUR: 11
+      STORE_CLOSE_HOUR: 22
+      FOOTFALL_SPIKE_MULTIPLIER: 2
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4000/api/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ── Dashboard ─────────────────────────────────────────────────────────────────
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: store_intel_dashboard
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      VITE_API_URL: http://localhost:4000/api
+      VITE_WS_URL: ws://localhost:4000/ws
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
+    driver: local

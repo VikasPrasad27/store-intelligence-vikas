@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+.env.local
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Data files — DO NOT commit videos or raw events per challenge rules
+data/videos/
+data/output/
+*.mp4
+*.avi
+*.mov
+*.jsonl
+
+# ML model weights (download automatically)
+*.pt
+*.pth
+*.onnx
+yolov8*.pt
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Docker
+.docker/
+
+# MongoDB data
+mongo_data/

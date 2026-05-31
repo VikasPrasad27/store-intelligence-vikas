@@ -1,0 +1,17 @@
+{
+  "name": "store-intelligence",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "cd app && npm install --silent && cd .. && jest --config jest.config.js --forceExit",
+    "test:coverage": "jest --config jest.config.js --coverage --forceExit",
+    "dev:api": "cd app && npm run dev",
+    "dev:dashboard": "cd dashboard && npm run dev",
+    "install:all": "cd app && npm install && cd ../dashboard && npm install"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "mongodb-memory-server": "^9.2.0"
+  }
+}
