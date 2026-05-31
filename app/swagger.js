@@ -36,6 +36,7 @@ const openApiSpec = {
     description: 'Real-time CCTV analytics API for ingestion, metrics, funnel, heatmap, anomalies, stores, and health.',
   },
   servers: [
+    { url: 'https://store-intelligence-api-jcib.onrender.com/api', description: 'Render API' },
     { url: 'http://localhost:4000/api', description: 'Local Docker API' },
     { url: '/api', description: 'Same-origin API' },
   ],

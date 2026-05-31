@@ -131,7 +131,9 @@ python pipeline/ingest_pos.py \
 Base URL: `http://localhost:4000/api`
 
 Swagger UI: `http://localhost:4000/api/docs`  
-OpenAPI JSON: `http://localhost:4000/api/openapi.json`
+OpenAPI JSON: `http://localhost:4000/api/openapi.json`  
+Deployed Swagger UI: `https://store-intelligence-api-jcib.onrender.com/api/docs`  
+Deployed Dashboard: `https://store-intelligence-vikas.vercel.app/`
 
 ### `POST /events/ingest`
 Idempotent batch event ingestion (up to 500 events per call).
