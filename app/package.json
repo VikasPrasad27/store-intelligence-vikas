@@ -23,7 +23,8 @@
     "joi": "^17.12.2",
     "winston": "^3.13.0",
     "express-async-errors": "^3.1.1",
-    "compression": "^1.7.4"
+    "compression": "^1.7.4",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",

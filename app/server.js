@@ -13,12 +13,22 @@ const { v4: uuidv4 } = require('uuid');
 const { connectDB, logger } = require('./db');
 const { requestLogger } = require('./middleware');
 const routes = require('./routes');
+const { mountSwagger } = require('./swagger');
 
 const app = express();
 const server = http.createServer(app);
 
 // ── Security & Performance ────────────────────────────────────────────────────
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:'],
+    },
+  },
+}));
 app.use(compression());
 app.set('trust proxy', 1);
 
@@ -55,6 +65,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 // ── Routes ────────────────────────────────────────────────────────────────────
+mountSwagger(app);
 app.use('/api', routes);
 
 // Root redirect
@@ -62,7 +73,8 @@ app.get('/', (req, res) => {
   res.json({
     name: 'Store Intelligence API',
     version: '1.0.0',
-    docs: '/api/health',
+    docs: '/api/docs',
+    openapi: '/api/openapi.json',
     endpoints: [
       'POST /api/events/ingest',
       'POST /api/pos/ingest',
