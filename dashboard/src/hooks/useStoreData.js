@@ -31,6 +31,9 @@ export function useStoreData(storeId, pollInterval = 15000) {
       if (f.status === 'fulfilled') setFunnel(f.value.data)
       if (h.status === 'fulfilled') setHeatmap(h.value.data)
       if (a.status === 'fulfilled') setAnomalies(a.value.data)
+      if ([m, f, h, a].every(result => result.status === 'rejected')) {
+        throw new Error(m.reason?.message || 'All store data requests failed')
+      }
       setLastUpdated(new Date())
       setError(null)
     } catch (err) {

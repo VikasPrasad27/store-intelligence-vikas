@@ -33,7 +33,12 @@ app.use(compression());
 app.set('trust proxy', 1);
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173').split(',');
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://store-intelligence-vikas.vercel.app',
+  ...(process.env.CORS_ORIGIN || '').split(','),
+].map(origin => origin.trim()).filter(Boolean);
 app.use(
   cors({
     origin: (origin, cb) => {
