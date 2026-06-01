@@ -1,10 +1,6 @@
-# Store Intelligence System — Purplle Brigade Road, Bangalore
+# Store Intelligence System — Purplle Round 2
 
 > End-to-end CCTV analytics pipeline: raw video → real-time store metrics API + live dashboard.
-
-**Store:** Purplle Brigade Road, Bangalore (`STORE_BLR_BRIGADE` / `ST1008`)  
-**Dataset Date:** April 10, 2026  
-**North Star Metric:** `Conversion Rate = Unique purchasing visitors ÷ Total unique visitors`
 
 ---
 
@@ -27,7 +23,7 @@ curl http://localhost:4000/api/health
 open http://localhost:3000
 ```
 
-API live at `http://localhost:4000` · Dashboard at `http://localhost:3000`
+API live at `https://store-intelligence-vikas.vercel.app/` · Dashboard at `https://store-intelligence-api-jcib.onrender.com/`
 
 ---
 
@@ -41,7 +37,7 @@ pip install -r requirements.txt
 # YOLOv8m model (~50MB) downloads automatically on first run
 ```
 
-### Place videos in `data/videos/`
+### Videos Placed in `data/videos/`
 
 ```
 data/videos/
@@ -51,9 +47,6 @@ data/videos/
 ├── CAM 4.mp4    ← Billing / Cash Counter camera
 └── CAM 5.mp4    ← Floor camera (Wall brands)
 ```
-
-> **Note:** Videos are NOT included in this repository per challenge rules.  
-> Place your `CAM 1.mp4` through `CAM 5.mp4` files in `data/videos/` before running.
 
 ### Process ALL clips (one command)
 
@@ -208,6 +201,7 @@ store-intelligence/
 │   └── requirements.txt
 ├── app/
 │   ├── server.js           # Express + WebSocket server
+│   ├── swagger.js           # Swagger for Api Documentation
 │   ├── db.js               # MongoDB + Winston logger
 │   ├── models/index.js     # Mongoose schemas
 │   ├── middleware/index.js # Validation, auth, request logging
@@ -244,17 +238,11 @@ store-intelligence/
 
 ### Render (API) + Vercel (Dashboard) + MongoDB Atlas
 
-**Step 1: MongoDB Atlas**
-1. Create free M0 cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas)
-2. Get connection string, whitelist `0.0.0.0/0`
+**Database: MongoDB Atlas**
 
-**Step 2: Render (API)**
-- Root dir: `app` · Build: `npm install` · Start: `node server.js`
-- Env: `MONGODB_URI`, `NODE_ENV=production`, `CORS_ORIGIN=https://your-dashboard.vercel.app`
+**Backend Deployed on: Render**`
 
-**Step 3: Vercel (Dashboard)**
-- Root dir: `dashboard` · Build: `npm run build` · Output: `dist`
-- Env: `VITE_API_URL=https://your-api.onrender.com/api`, `VITE_WS_URL=wss://your-api.onrender.com/ws`
+**Frontend: Vercel (Dashboard)**
 
 ### Local Docker
 
@@ -268,7 +256,7 @@ docker compose down -v          # reset everything
 
 ## Live Dashboard
 
-URL: **http://localhost:3000**
+URL: **https://store-intelligence-vikas.vercel.app/**
 
 - Live KPI cards (visitors, conversion rate, revenue, queue depth, avg dwell, abandon rate)
 - 4-stage animated conversion funnel
@@ -306,4 +294,5 @@ URL: **http://localhost:3000**
 | Logging | Winston (structured JSON) |
 | Dashboard | React 18 · Vite · Tailwind CSS |
 | Container | Docker · Docker Compose · Nginx |
+| API Documentation | Swagger |
 | Tests | Jest · Supertest · mongodb-memory-server · pytest |

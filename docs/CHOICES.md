@@ -19,7 +19,7 @@ Choose a person detection model and tracker for 1080p/15fps retail CCTV footage.
 | RT-DETR + ByteTrack | Good | Slow | Good | High |
 | MediaPipe Pose | Medium | Very fast | Poor (silhouettes only) | Very Low |
 
-**What AI suggested:** I asked Claude to compare YOLOv8 variants for retail CCTV use cases. It recommended YOLOv8m as the "practical starting point" — nano is too lossy for partial occlusion and crowded billing areas, while large/x variants are overkill without GPU. For tracking, it recommended ByteTrack over DeepSORT because ByteTrack recovers better from occlusion (it keeps "lost" tracks alive and matches them against low-confidence detections in the next pass, which is exactly what happens when a customer briefly passes behind a display).
+**What AI suggested:** I asked Claude to compare YOLOv8 variants for retail CCTV use cases. It recommended YOLOv8m as the "practical starting point" nano is too lossy for partial occlusion and crowded billing areas, while large/x variants are overkill without GPU. For tracking, it recommended ByteTrack over DeepSORT because ByteTrack recovers better from occlusion (it keeps "lost" tracks alive and matches them against low-confidence detections in the next pass, which is exactly what happens when a customer briefly passes behind a display).
 
 I also asked GPT-4o to compare RT-DETR vs YOLOv8 for this use case. GPT-4o leaned toward RT-DETR for accuracy but acknowledged the installation complexity in a containerised environment. I weighted deployment simplicity higher than marginal accuracy gains.
 
@@ -27,7 +27,7 @@ I also asked GPT-4o to compare RT-DETR vs YOLOv8 for this use case. GPT-4o leane
 
 **Why:** The accuracy/speed/setup tradeoff of YOLOv8m is optimal for this challenge. The custom tracker (rather than the upstream ByteTrack library) avoids a CUDA dependency chain while preserving the two-pass matching logic that handles partial occlusion. I also implemented a lightweight HOG-based embedding for Re-ID rather than full OSNet, which avoids PyTorch version compatibility issues in Docker.
 
-**Where I disagreed with AI:** Claude initially suggested using the upstream `boxmot` library (which includes StrongSORT and ByteTrack as plug-in trackers). I evaluated this but rejected it — `boxmot` requires CUDA for the Re-ID models and has frequent breaking changes between versions. A self-contained implementation is more robust for a containerised submission.
+**Where I disagreed with AI:** Claude initially suggested using the upstream `boxmot` library (which includes StrongSORT and ByteTrack as plug-in trackers). I evaluated this but rejected it `boxmot` requires CUDA for the Re-ID models and has frequent breaking changes between versions. A self-contained implementation is more robust for a containerised submission.
 
 **VLM evaluation (zone classification):**
 I evaluated using Claude Vision for zone classification — submitting a frame crop and asking "which zone is this person in: SKINCARE, BILLING, ENTRY?". Results were surprisingly good for static layouts (~85% accuracy on test frames). However, at 5 API calls per second (5fps effective × 1 person per frame average), this would cost ~$2.40/minute of video at Claude API prices and introduce 300-800ms latency per classification. I chose polygon-based zone assignment (point-in-polygon test against `store_layout.json` coordinates) instead. This is O(1) per frame and perfectly accurate for fixed camera positions. The VLM approach would be worth revisiting for dynamic layouts or cameras that pan.
