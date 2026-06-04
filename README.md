@@ -119,6 +119,13 @@ python pipeline/ingest_pos.py \
 
 ---
 
+## 📌Mandatory Deliverables
+
+All required submission artifacts are included in this repository:
+* **Event Log:** The final consolidated JSONL output is located at `final_events.jsonl`.
+* **Design Decisions:** `docs/DESIGN.md` (Includes the required AI-Assisted Decisions section).
+* **Architecture Choices:** `docs/CHOICES.md` (Covers model selection, schema, and API architecture).
+
 ## API Reference
 
 Base URL: `http://localhost:4000/api`
@@ -229,6 +236,7 @@ store-intelligence/
 │   └── CHOICES.md
 ├── assertions.py           # 10 API assertions
 ├── docker-compose.yml
+├── final_events.jsonl
 └── README.md
 ```
 
